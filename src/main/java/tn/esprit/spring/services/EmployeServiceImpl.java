@@ -3,10 +3,7 @@ package tn.esprit.spring.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +19,10 @@ import tn.esprit.spring.repository.DepartementRepository;
 import tn.esprit.spring.repository.EmployeRepository;
 import tn.esprit.spring.repository.TimesheetRepository;
 
+
+
 @Service
 public class EmployeServiceImpl implements IEmployeService {
-	private static final Logger LOG = LogManager.getLogger(EmployeServiceImpl.class);
-
 
 	@Autowired
 	EmployeRepository employeRepository;
@@ -42,18 +39,9 @@ public class EmployeServiceImpl implements IEmployeService {
 	}
 
 	public void mettreAjourEmailByEmployeId(String email, int employeId) {
-		Optional<Employe> employe = employeRepository.findById(employeId);
-		Employe emp=null;
-		if (employe.isPresent()) {
-			emp = employe.get();
-		}
-		if ((emp!=null)) {
-			emp.setEmail(email);
-			employeRepository.save(emp);
-		}
-		//Employe employe = employeRepository.findById(employeId).get();
-		//employe.setEmail(email);
-		//employeRepository.save(employe);
+		Employe employe = employeRepository.findById(employeId).get();
+		employe.setEmail(email);
+		employeRepository.save(employe);
 
 	}
 
